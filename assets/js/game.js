@@ -2,10 +2,6 @@
 
 // function to generate a random numeric value
 var randomNumber = function(min, max) {
-  var value = Math.floor(Math.random() * (max - min + 1) + min);
-
-  return value;
-};
   var value = Math.floor(Math.random() * (max - min) + min);
 
   return value;
@@ -55,20 +51,6 @@ var fight = function(enemy) {
   }
 
   while (playerInfo.health > 0 && enemy.health > 0) {
-    // ask player if they'd like to fight or run
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-    // if player picks "skip" confirm and then stop the loop
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        // subtract money from playerInfo.money for skipping
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money)
     if (isPlayerTurn) {
       // ask player if they'd like to fight or skip using fightOrSkip function
       if (fightOrSkip()) {
@@ -76,13 +58,6 @@ var fight = function(enemy) {
         break;
       }
 
-    // generate random damage value based on player's attack power
-    var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-
-    enemy.health = Math.max(0, enemy.health - damage);
-    console.log(
-      playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.'
-    );
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
       // remove enemy's health by subtracting the amount we set in the damage variable
@@ -114,14 +89,18 @@ var fight = function(enemy) {
     } else {
       var damage = randomNumber(enemy.attack - 3, enemy.attack);
 
-    // remove players's health by subtracting the amount set in the enemy.attack variable
-    var damage = randomNumber(enemy.attack - 3, enemy.attack);
-
-    playerInfo.health = Math.max(0, playerInfo.health - damage);
-    
-    console.log(
-      enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' now has ' + playerInfo.health + ' health remaining.'
-    );
+      // remove enemy's health by subtracting the amount we set in the damage variable
+      playerInfo.health = Math.max(0, playerInfo.health - damage);
+      console.log(
+        enemy.name +
+          " attacked " +
+          playerInfo.name +
+          ". " +
+          playerInfo.name +
+          " now has " +
+          playerInfo.health +
+          " health remaining."
+      );
 
       // check player's health
       if (playerInfo.health <= 0) {
@@ -144,7 +123,6 @@ var startGame = function() {
 
   // fight each enemy robot by looping over them and fighting them one at a time
   for (var i = 0; i < enemyInfo.length; i++) {
-    // if player is still alive, keep fight next enemy
     // check player stats
     console.log(playerInfo);
 
@@ -259,7 +237,6 @@ var getPlayerName = function() {
 
 /* GAME INFORMATION / VARIABLES */
 
-// player information
 var playerInfo = {
   name: getPlayerName(),
   health: 100,
@@ -290,18 +267,6 @@ var playerInfo = {
   }
 };
 
-// enemy information
-var enemyInfo = [
-  {
-    name: 'Roborto',
-    attack: randomNumber(10, 14)
-  },
-  {
-    name: 'Amy Android',
-    attack: randomNumber(10, 14)
-  },
-  {
-    name: 'Robo Trumble',
 var enemyInfo = [
   {
     name: "Roborto",
@@ -317,13 +282,7 @@ var enemyInfo = [
   }
 ];
 
-console.log(enemyInfo);
-console.log(enemyInfo[0]);
-console.log(enemyInfo[0].name);
-console.log(enemyInfo[0]['attack']);
-
 /* END GAME INFORMATION / VARIABLES */
 
 /* RUN GAME */
 startGame();
-
